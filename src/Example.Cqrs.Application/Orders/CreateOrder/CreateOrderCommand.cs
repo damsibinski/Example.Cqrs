@@ -8,12 +8,14 @@ namespace Example.Cqrs.Application.Orders.CreateOrder;
 public sealed record CreateOrderCommand(Guid ProductId, int Quantity)
     : IRequest<Result<CreateOrderResult>>;
 
-public sealed record CreateOrderResult(
-    Guid Id,
-    Guid ProductId,
-    int Quantity,
-    decimal TotalPrice,
-    DateTimeOffset ExpectedDeliveryAt);
+public sealed record CreateOrderResult
+{
+    public required Guid Id { get; init; }
+    public required Guid ProductId { get; init; }
+    public required int Quantity { get; init; }
+    public required decimal TotalPrice { get; init; }
+    public required DateTimeOffset ExpectedDeliveryAt { get; init; }
+}
 
 public sealed class CreateOrderCommandHandler(
     IProductRepository productRepository,
@@ -38,11 +40,13 @@ public sealed class CreateOrderCommandHandler(
         orderRepository.Add(order);
         await orderRepository.SaveChangesAsync(cancellationToken);
 
-        return new CreateOrderResult(
-            order.Id,
-            order.ProductId,
-            order.Quantity,
-            order.TotalPrice,
-            order.ExpectedDeliveryAt);
+        return new CreateOrderResult
+        {
+            Id = order.Id,
+            ProductId = order.ProductId,
+            Quantity = order.Quantity,
+            TotalPrice = order.TotalPrice,
+            ExpectedDeliveryAt = order.ExpectedDeliveryAt,
+        };
     }
 }

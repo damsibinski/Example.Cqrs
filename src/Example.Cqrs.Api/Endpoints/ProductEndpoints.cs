@@ -10,18 +10,19 @@ public static class ProductEndpoints
         var group = app.MapGroup("/api/products")
             .WithTags("Products");
 
-        group.MapGet("/", ListProductsAsync)
+        group.MapGet(
+                "/",
+                async (
+                    IMediator mediator,
+                    CancellationToken cancellationToken
+                ) =>
+                {
+                    var result = await mediator.Send(new ListProductsQuery(), cancellationToken);
+                    return result.ToHttpResult();
+                })
             .WithName("ListProducts")
             .Produces<ProductListItemDto[]>();
 
         return app;
-    }
-
-    private static async Task<IResult> ListProductsAsync(
-        IMediator mediator,
-        CancellationToken cancellationToken)
-    {
-        var result = await mediator.Send(new ListProductsQuery(), cancellationToken);
-        return result.ToHttpResult();
     }
 }

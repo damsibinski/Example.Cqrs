@@ -6,13 +6,15 @@ namespace Example.Cqrs.Application.Orders.GetOrder;
 
 public sealed record GetOrderQuery(Guid Id) : IRequest<Result<GetOrderResponseDto>>;
 
-public sealed record GetOrderResponseDto(
-    Guid Id,
-    Guid ProductId,
-    int Quantity,
-    decimal TotalPrice,
-    DateTimeOffset ExpectedDeliveryAt,
-    DateTimeOffset CreatedAt);
+public sealed record GetOrderResponseDto
+{
+    public required Guid Id { get; init; }
+    public required Guid ProductId { get; init; }
+    public required int Quantity { get; init; }
+    public required decimal TotalPrice { get; init; }
+    public required DateTimeOffset ExpectedDeliveryAt { get; init; }
+    public required DateTimeOffset CreatedAt { get; init; }
+}
 
 public sealed class GetOrderQueryHandler(IOrderRepository orderRepository)
     : IRequestHandler<GetOrderQuery, Result<GetOrderResponseDto>>
@@ -29,12 +31,14 @@ public sealed class GetOrderQueryHandler(IOrderRepository orderRepository)
                 $"Order '{request.Id}' was not found.");
         }
 
-        return new GetOrderResponseDto(
-            order.Id,
-            order.ProductId,
-            order.Quantity,
-            order.TotalPrice,
-            order.ExpectedDeliveryAt,
-            order.CreatedAt);
+        return new GetOrderResponseDto
+        {
+            Id = order.Id,
+            ProductId = order.ProductId,
+            Quantity = order.Quantity,
+            TotalPrice = order.TotalPrice,
+            ExpectedDeliveryAt = order.ExpectedDeliveryAt,
+            CreatedAt = order.CreatedAt,
+        };
     }
 }
