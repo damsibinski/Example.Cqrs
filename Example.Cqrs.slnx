@@ -5,4 +5,8 @@
     <Project Path="src/Example.Cqrs.Domain/Example.Cqrs.Domain.csproj" />
     <Project Path="src/Example.Cqrs.Infrastructure/Example.Cqrs.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Example.Cqrs.Application.UnitTests/Example.Cqrs.Application.UnitTests.csproj" />
+    <Project Path="tests/Example.Cqrs.Domain.UnitTests/Example.Cqrs.Domain.UnitTests.csproj" />
+  </Folder>
 </Solution>
