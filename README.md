@@ -10,13 +10,15 @@ Standalone Clean Architecture sample that demonstrates a practical reading of CQ
 
 ```text
 Example.Cqrs.slnx
-└── src/
-    ├── Example.Cqrs.Domain          # entities + repository ports
-    ├── Example.Cqrs.Application     # MediatR commands/queries + FluentValidation
-    ├── Example.Cqrs.Infrastructure  # EF Core SQLite + repositories + seed
-    └── Example.Cqrs.Api             # Minimal APIs + Swagger + ProblemDetails
+├── src/
+│   ├── Example.Cqrs.Domain          # entities + repository ports
+│   ├── Example.Cqrs.Application     # MediatR commands/queries + FluentValidation
+│   ├── Example.Cqrs.Infrastructure  # EF Core SQLite + repositories + seed
+│   └── Example.Cqrs.Api             # Minimal APIs + Swagger + ProblemDetails
+└── tests/
+    ├── Example.Cqrs.Domain.UnitTests        # domain rules (Order, Product)
+    └── Example.Cqrs.Application.UnitTests     # handlers + FluentValidation
 ```
-
 Dependency direction:
 
 `Api -> Infrastructure`  
