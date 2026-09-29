@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:5140
+
+### List seeded products
+GET {{baseUrl}}/api/products
+Accept: application/json
+
+### Create an order (command returns Id, TotalPrice, ExpectedDeliveryAt)
+# @name createOrder
+POST {{baseUrl}}/api/orders
+Content-Type: application/json
+Accept: application/json
+
+{
+  "productId": "11111111-1111-1111-1111-111111111111",
+  "quantity": 2
+}
+
+### Get the created order (query reads the same shared model)
+GET {{baseUrl}}/api/orders/{{createOrder.response.body.$.id}}
+Accept: application/json
